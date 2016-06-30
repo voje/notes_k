@@ -316,3 +316,19 @@ j = ++i;	//j = 1, i = 1 ... prefix notation opeares and returns changed value
 j = i++;	//j = 1, i = 2 ... postfix notation saves a copy of the value, operates, then returns the copy
 ---
 
+#$# casting
+(int) a ... old style. don't use
+---
+int a = 5;
+static_cast<double>(a)/3;	//still don't use casting -> c++ is statically typed
+---
+
+## Chapter 5
+
+
+
+
+
+
+
+
