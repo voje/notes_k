@@ -1,5 +1,5 @@
 Left on page:
-5, 17, 38, 54, 64, 82, 109, 125, 141, 151
+5, 17, 38, 54, 64, 82, 109, 125, 141, 151, 200, 218, 223
 
 Document structure
  ( for easier search )
@@ -108,7 +108,7 @@ file 2 (use constant from file 1):
 extern const int buff;
 
 #$# top-level const
-the pointer itself is a constant
+the pointer itself is a constant (or any other object)
 int i = 5;
 int *const pi = &i;
 
@@ -116,6 +116,9 @@ int *const pi = &i;
 the pointer is pointing to a constant
 const int i = 5;
 const int *pi = &i;
+we can change the pointer
+
+const int &r = i; //constants in reference types are always low level
 
 #$# constexpr
 expressions, evaluated at compile time
@@ -324,6 +327,55 @@ static_cast<double>(a)/3;	//still don't use casting -> c++ is statically typed
 ---
 
 ## Chapter 5
+Flow control, loops, etc. Important part: exception handling (the very basics).
+
+---
+#include <stdexcept>
+
+using std::runtime_error
+
+runtime_error err
+err.what()
+---
+
+
+## Chapter 6
+
+Using keyword static makes a variable persistant thorough the execution of a program. We can define a static inside a function and it will continue to exist after the function has ended.
+
+Separate compilation: use flag -c, create .o files. Compile .o files same as .cpp files.
+
+#$# passing by reference
+uses argument
+
+#$# passing by value
+copies argument
+
+---
+void reset(int *p) {
+	*p = 0; //value of p is now 0;
+	p = 0;	//pointer p is now 0, but only locally
+}
+---
+
+Reference parameters that should not change should be references to const.
+
+void foo(const string &s1, const string &s2) {};
+
+### Passing arrays to functions
+---
+int arr[] = {1, 2};
+void foo(int (&arr)[10]); //passing a reference to array
+void foo(int *arr);	//passing pointer to array
+void foo(int (*arr)[20]); //passing a pointer to a 2D array (need to specify all dimensions but first)
+---
+
+### Passing different lengths of args
+If arguments are of the same type, we can pass them into a function in an initializer_list.
+
+
+
+
 
 
 
