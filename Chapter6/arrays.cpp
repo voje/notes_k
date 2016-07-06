@@ -36,6 +36,12 @@ void read_with_library1(const int *beg, const int *end) {
 	}
 }
 
+void read_using_init_list(initializer_list<string> ls) {
+	for (initializer_list<string>::iterator i = ls.begin(); i != ls.end(); ++i) {
+		cout << *i << endl;	
+	}
+}
+
 void read_vector(vector<int> &vec) {
 	cout << "read_vector" << endl;
 	for (vector<int>::iterator i = vec.begin(); i != vec.end(); ++i) {
@@ -68,6 +74,7 @@ int main(int argc, char **argv) {
 	read_with_library(begin(arr2), end(arr2));
 	read_with_library1(begin(arr2), end(arr2));
 	read_vector(vec2);
+	read_using_init_list({"asdf", "derp", "4444"});
 
 	return 0;
 }

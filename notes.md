@@ -1,5 +1,5 @@
 Left on page:
-5, 17, 38, 54, 64, 82, 109, 125, 141, 151, 200, 218, 223
+5, 17, 38, 54, 64, 82, 109, 125, 141, 151, 200, 218, 223, 236, 253;
 
 Document structure
  ( for easier search )
@@ -373,13 +373,100 @@ void foo(int (*arr)[20]); //passing a pointer to a 2D array (need to specify all
 ### Passing different lengths of args
 If arguments are of the same type, we can pass them into a function in an initializer_list.
 
+---
+void read(initializer_list<string> ls) {
+	for (initializer_list<string>::iterator i = ls.begin(); i != ls.end(); ++i) {
+		cout << *i << endl;	
+	}
+}
+---
+
+#$# return value
+Return initializes a function type.
+
+You can return a reference or a pointer to a parameter (normal return returns a copy of an object). NEVER RETURN REFERENCE OR POINTER TO A LOCAL OBJECT!!!
+
+Functions that return a reference, return lvalues. We can assign to these objects.
+
+---
+char &foo(string &str, string::size_type position) {
+	return str[position];
+}
+foo(a, 1) = "A";
+---
+
+### return a pointer to an array
+---
+type (*function(parameters))[dimension]
+int (*foo(int i))[10];	//pointer to an array of 10
+---
+
+c++11 standard allows defining a return type at declaration:
+---
+auto func(int i) --> int(*)[10];
+---
+
+also possible:
+arr1..
+arr2..
+decltype(arr1) *arrPtr(int i);
+
+#$# overloaded function
+functions differentiate based on length and contents of their parameter lists.
+
+#$# default parameters
+Should be specified in header.
+Can be added, not redeclared.
+left 			<-> right
+less default	<-> more default
+
+#$# inline function
+Expanded by compiler.
+
+#$# constecpr functions
+DEFINE these and inline functions in header files.
+
+#$# assert
+Preprocessor macro. In runtime it's evaluated only if NDEBUG is NOT defined.
+---
+assert(expression)	//if expression is false, terminate
+---
+
+#$# NDEBUG
+Preprocessor variable, used for debugging.
+---
+#ifndef NDEBUG
+cout << "test prints" << endl;
+#endif
+---
+
+### Some useful variables
+compiler:
+__func__
+
+preprocessor:
+__FILE__
+__LINE__
+__TIME__
+__DATE__
+
+### Pointers to functions
+---
+bool foo(int);	//function declaration
+bool (*pt)(int); 	//pointer declaration
+
+pt = foo;
+pt = &foo;	//same thing
+
+foo(3);
+pt(3);		//same thing
 
 
+typedef int funcp(int, int);
 
-
-
-
-
+void newFunction(int, funcp);
+void newFunction(int, int (*funcp)(int, int));	//same thing
+---
 
 
 
