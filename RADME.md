@@ -1,5 +1,5 @@
 Left on page:
-5, 17, 38, 54, 64, 82, 109, 125, 141, 151, 200, 218, 223, 236, 253;
+5, 17, 38, 54, 64, 82, 109, 125, 141, 151, 200, 218, 223, 236, 253, 276, 294, 307;
 
 Document structure
  ( for easier search )
@@ -52,7 +52,7 @@ while (std::cin >> value)
 	//std::cin is an istream object, that returns false, if it reads an end-of-file or if it encounters an invalid input
 	//end of file from command line: (UNIX: Ctrl+d, Windows, Ctrl+z)
 
-## Chapter2
+## Chapter 2
 
 #$# definition
 allocates space for a new variable. Also declares. Optionally intializes.
@@ -468,6 +468,56 @@ void newFunction(int, funcp);
 void newFunction(int, int (*funcp)(int, int));	//same thing
 ---
 
+## Chapter 7
 
+#$# const member functions
+const objects may only call const member functions
 
+---
+Sales_data& Sales_data::combine(const Sales_data &rhs) {
+	units_sold += rhs.units_sold;
+	revenue += rhs.revenue;
+	return *this; //return the whole object... actually returns a reference to that object
+}
+---
 
+#$# constructor initializer list
+Good practise is to always use constructor initializers. There is a difference between assigning and initializing.
+assign: { a = b }	//2 steps... also some members won't have default initializers.
+initialize: Con::Con(int ii): a(ii);	//1 step
+---
+Sales_data(const std::stirng &s): bookNo(s), units_sold(0), revenue(0) { }
+---
+
+Classes synthesize a default destructor. If we aren't using dynamic memory allocation, that will suffice. String and vector are destroyed by the synthetic destructor.
+
+struct: default access level is public
+class: default access level is private
+
+#$# friend
+Use keyword friend to allow access to private class members.  
+This is NOT a declaration, we still need to declare and define the functions.
+We can use friend to give a class access to private members of another class.
+---
+class Screen {
+	friend class Window; //Window can access private members of Screen
+	friend void Window::clear();	//we can also grant access to a specific function
+};
+---
+
+A class can have its own local typedef.
+---
+private:
+	typedef std::string::size_type pos;
+---
+
+#$# default constructor
+Every class should have a default constructor. It's used every time an object is default or value initialized.
+Default initialization of an object has no parenthesis.
+Sales_data obj2;
+
+#$# static class member
+Variable or function that is bound to the class instead of his objects.
+static double interest_rate;
+We can't initialize a static member inside a class.
+We need to define and init outside.
