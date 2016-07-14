@@ -1,5 +1,5 @@
 Left on page:
-5, 17, 38, 54, 64, 82, 109, 125, 141, 151, 200, 218, 223, 236, 253, 276, 294, 307;
+5, 17, 38, 54, 64, 82, 109, 125, 141, 151, 200, 218, 223, 236, 253, 276, 294, 307, 325, 346
 
 Document structure
  ( for easier search )
@@ -472,6 +472,16 @@ void newFunction(int, int (*funcp)(int, int));	//same thing
 
 #$# const member functions
 const objects may only call const member functions
+If our member function doesn't change the object, is good to define int as a pointer to const (just in case we want to call it on a const object);
+member_function(this)
+this is implicitly of type: ObjType *const this
+we want: const ObjType *const.
+how do we achieve this? -> declaration of member function has no argument this
+we use the following syntax:
+---
+int member_functoin1() const;
+int member_functoin2(int i) const { member_variable += i; }	//m.fun defined in a class body are implicitly inline.
+---
 
 ---
 Sales_data& Sales_data::combine(const Sales_data &rhs) {
@@ -521,3 +531,81 @@ Variable or function that is bound to the class instead of his objects.
 static double interest_rate;
 We can't initialize a static member inside a class.
 We need to define and init outside.
+
+
+## Chapter 8
+---
+while ( cin >> word ) { ... }
+//equal to
+while ( !cin.fail() ) { ... }
+---
+Check stream object:  
+* .eof();	//reaching EOF sets both eofbit and failbit
+* .fail(); 	//for example if we read a char instead of expected int - recoverable
+* .bad(); 	//system failure - unrecoverable
+* .good();	//all bits are in a valid state
+* .clear();	//set all bits to valid state
+
+Buffer flushing:  
+* << endl; 		// \n, flush
+* << flush; 	// flush
+* << ends;		// \0, flush
+
+### Tieing streams
+cin.tie(&cout); //argument is a pointer to stream object
+
+### File io
+File modes:
+in, out, app, ate, turnc, binray
+When you use ofstream, the file is opened in out mode + turncate mode (which destroys the data).  
+Prevent turncation with in or app mode.
+
+### string io
+istringstream, ostringstream, stringstream
+
+---
+string line, word;
+while ( getline(cin, line) ) {
+	istream istr(line);
+	while (istr >> word) {
+		;
+	}
+}
+---
+
+ostringstream is useful if we are buffering output (only print out if no errors etc...).
+
+
+## Chapter 8
+containers
+
+[begin, end)
+[cbegin, cend)... when we are only reading
+
+### members:  
+* size_type
+* (const_)iterator
+* (const_)reference
+* value_type	//like calling auto on a container element
+---
+vector<int>::size_type;
+---
+
+### initialization:  
+* copy  
+vector<int>(v2);  
+vector<int>(v3.begin(), v3.end);  
+* list  
+vector<int>{1,2,3};
+* seq  
+vector<int>(n_elements, initializer);
+
+array<int, 10>;	//std arrays are faster than old arrays
+
+### member functoins:  
+* .assign(); 	//check copy initialization
+* .swap();		//no need for equal lengths. iterators stay glued to the same elements (you also swap the iterators)
+* .push_back();
+* .insert(p,t);	//insert element in front of iterator p. returns iterator pointing to the inserted element
+* .emplace_back(constructor args);	//construct new element in the back of the container
+
