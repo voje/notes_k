@@ -1,5 +1,5 @@
 Left on page:
-5, 17, 38, 54, 64, 82, 109, 125, 141, 151, 200, 218, 223, 236, 253, 276, 294, 307, 325, 346, 360;
+5, 17, 38, 54, 64, 82, 109, 125, 141, 151, 200, 218, 223, 236, 253, 276, 294, 307, 325, 346, 360, 373;
 
 Document structure
  ( for easier search )
@@ -662,4 +662,21 @@ When adding/erasing, refresh iterators using insert() and erase().
 
 Vector is in practise faster than list, even with reallocation.  
 
+### string operations
+* substr(starting_point, count);
+* s.replace(pos, len, "pattern");
+* s.find("a");
+* s.find_first_of("abcd"); //finds either a or b or ...
+* to_string(my_int);	//or double or float or any..
+* stoi("29");
+* stod("asdf29", 4, 6);
 
+### container adaptors
+stack, queue, priority_queue
+They are built over a sequential container. Stack and queue like to use deque, pri_que uses vector.  
+Declare an empty adaptor:  
+stack<int> st;
+Declare and specify the underlying container:
+stack<int, vector<int>> st;
+Declare and define, using an existing container:
+stack<int> st(my_vector);
