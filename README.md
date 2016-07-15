@@ -1,5 +1,5 @@
 Left on page:
-5, 17, 38, 54, 64, 82, 109, 125, 141, 151, 200, 218, 223, 236, 253, 276, 294, 307, 325, 346
+5, 17, 38, 54, 64, 82, 109, 125, 141, 151, 200, 218, 223, 236, 253, 276, 294, 307, 325, 346, 360;
 
 Document structure
  ( for easier search )
@@ -468,6 +468,29 @@ void newFunction(int, funcp);
 void newFunction(int, int (*funcp)(int, int));	//same thing
 ---
 
+If you want to get your hands really dirty, you can try passing a class member function...
+---
+class CellGrid {
+public:
+	void iterate_grid( void (CellGrid::*)(Coords), bool print=false );
+	void helper_print_cell( Coords co );
+};
+
+void CellGrid::iterate_grid( void (CellGrid::*fptr)(Coords), bool print ) {
+	(this->*fptr)(Coords(j, i));	//usage				
+}
+
+void CellGrid::helper_print_cell( Coords co ) {
+	cout << grid.at(co.y).at(co.x);
+}
+
+//passing the function
+int main() {
+	iterate_grid( &CellGrid::helper_print_cell );
+	return 0;
+}
+---
+
 ## Chapter 7
 
 #$# const member functions
@@ -608,4 +631,35 @@ array<int, 10>;	//std arrays are faster than old arrays
 * .push_back();
 * .insert(p,t);	//insert element in front of iterator p. returns iterator pointing to the inserted element
 * .emplace_back(constructor args);	//construct new element in the back of the container
+
+### access
+//these all return references to the object!
+* .back();	//same as *(--(.end()));
+* .front(); 	//same as *(.begin());
+* [n];
+* .at(n);	//safer: throws en exception
+
+---
+auto &v1 = c.back();	//gives a reference
+auto v2 = c.back(); 	//gives a copy
+---
+
+### erase
+* .erase(a);	//returns iterator pointing to the next element
+* .erase(a, b); //range
+* .pop_front(); //returns void
+* .pop_back();	//returns void
+* .clear();		//clears everything
+
+Erasing elements invalidate iterators. Also adding and stuff (automatic resize can mess things up). Use iterators in the smallest scope possible. Recalculate iterators, especially the off-the-end one!  
+When adding/erasing, refresh iterators using insert() and erase().
+
+### resize
+* .resize(n);
+* .resize(n, val);
+* .capacity();	//when size() == capacity(), reallocation occurs
+* .reserver(n);
+
+Vector is in practise faster than list, even with reallocation.  
+
 
