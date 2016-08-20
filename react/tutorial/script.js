@@ -69,7 +69,7 @@ var ListArea = React.createClass({
 	render: function() {
 		var displayedElements = [];
 		this.props.products.forEach(function(e) {
-			if (this.props.boxChecked && !e.stocked) {
+			if ( e.name.indexOf(this.props.searchText)===-1 || (this.props.boxChecked && !e.stocked) ) {
 				return;
 			}
 			displayedElements.push(<ProductsRow key={e.name} product={e} />);
