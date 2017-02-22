@@ -1,0 +1,3 @@
+rootProject.name = 'A_T420'
+
+include ':app'
